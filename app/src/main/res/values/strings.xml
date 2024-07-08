@@ -1,3 +1,18 @@
 <resources>
-    <string name="app_name">android-task</string>
+    <string name="app_name">Dog</string>
+    <string name="arrow_icon">arrow icon</string>
+    <string name="no_internet_title">No internet found</string>
+    <string name="no_internet_message">Failed to get your latest tasks. Looks like you don\'t have internet connection</string>
+
+    <string name="no_tasks_title">No tasks found</string>
+    <string name="no_tasks_message">Looks like you don\'t have any tasks. Press the add button below to create one</string>
+
+    <string name="no_completed_tasks_title">No tasks completed</string>
+    <string name="no_completed_tasks_message">Looks like you have not completed any task. Complete a task to see it here</string>
+
+    <string name="no_tasks_last_week_message">Looks like you have not created any tasks since last week</string>
+
+    <string name="unknown_error_title">Something went wrong</string>
+    <string name="unknown_error_message">Looks like something went wrong while getting your data. Please try again later</string>
+
 </resources>

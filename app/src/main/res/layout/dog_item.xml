@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="18dp"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <TextView
+        android:id="@+id/breed_name"
+        android:textSize="18sp"
+        tools:text="Hound"
+
+        android:textColor="@color/black"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <ImageView
+        android:id="@+id/arrow_img"
+        android:layout_alignParentEnd="true"
+        android:contentDescription="@string/arrow_icon"
+        android:src="@drawable/baseline_arrow_forward_ios_24"
+        android:layout_width="28dp"
+        android:padding="4dp"
+        android:background="?attr/selectableItemBackground"
+        android:layout_height="28dp"/>
+
+</RelativeLayout>
