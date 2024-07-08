@@ -1,11 +1,12 @@
 package com.sampath.androidTask.utils
 
+
 sealed class Resource<T>(
     open val data: T? = null,
     open val message: String = "Oops something went wrong."
 ) {
     data class Success<T>(
-        override val data: T,
+        override val data: T?,
         override val message: String = "Oops something went wrong."
     ) : Resource<T>(data)
 

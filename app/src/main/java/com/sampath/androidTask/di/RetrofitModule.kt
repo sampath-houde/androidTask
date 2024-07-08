@@ -1,6 +1,6 @@
 package com.sampath.androidTask.di
 
-import com.sampath.androidTask.api.DogApiService
+import com.sampath.androidTask.data.remote.api.DogApiService
 import com.sampath.androidTask.utils.Constants
 import dagger.Module
 import dagger.Provides
