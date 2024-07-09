@@ -1,5 +1,7 @@
 package com.sampath.androidTask.ui
 
+import android.app.SearchManager
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
@@ -19,6 +21,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
+
 @AndroidEntryPoint
 class HomeScreenActivity : AppCompatActivity() {
 
@@ -26,20 +29,15 @@ class HomeScreenActivity : AppCompatActivity() {
     private lateinit var dogBreedAdapter: DogBreedAdapter
     private val homeScreenViewModel: DogViewModel by viewModels()
     private var listOfBreeds = mutableListOf<String>()
+    private lateinit var searchView: SearchView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        dogBreedAdapter = DogBreedAdapter{
-            val intent = Intent(this, ImageViewActivity::class.java)
-                .apply {
-                    putExtra(INTENT_DOG_NAME, it)
-                }
-            startActivity(intent)
-        }
         initRecyclerView()
-
         callApi()
+
+
         binding.swipeRefresh.setOnRefreshListener {
             callApi()
         }
@@ -70,6 +68,15 @@ class HomeScreenActivity : AppCompatActivity() {
     }
 
     fun initRecyclerView() {
+
+        dogBreedAdapter = DogBreedAdapter{
+            val intent = Intent(this, ImageViewActivity::class.java)
+                .apply {
+                    putExtra(INTENT_DOG_NAME, it)
+                }
+            startActivity(intent)
+        }
+
         binding.dogsRv.apply {
             adapter = dogBreedAdapter
             setHasFixedSize(false)
@@ -87,28 +94,33 @@ class HomeScreenActivity : AppCompatActivity() {
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.home_menu, menu)
         val menuItem = menu?.findItem(R.id.actionSearch)
-        val searchView = menuItem?.actionView as SearchView
+        searchView = menuItem?.actionView as SearchView
+
+        val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(componentName))
+
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
+
+                menuItem.collapseActionView()
+                updateDataToAdapter(query)
                 return false
             }
-
             override fun onQueryTextChange(newText: String?): Boolean {
-                newText?.let { query ->
-                    val filteredList = listOfBreeds.filter { it.contains(query, ignoreCase = true) }
-                    if(filteredList.isEmpty()) {
-                        //TODO show no result
-                    } else {
-                        dogBreedAdapter.updateData(filteredList)
-                    }
-
-                }
-
+                updateDataToAdapter(query = newText)
                 return false
             }
-
         })
         return super.onCreateOptionsMenu(menu)
-
     }
+
+    private fun updateDataToAdapter(query: String?) {
+        val filteredBreeds = if (query.isNullOrEmpty()) {
+            listOfBreeds
+        } else {
+            listOfBreeds.filter { it.contains(query, true) }
+        }
+        dogBreedAdapter.updateData(filteredBreeds)
+    }
+
 }
