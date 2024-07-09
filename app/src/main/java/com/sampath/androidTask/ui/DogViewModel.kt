@@ -22,12 +22,12 @@ class DogViewModel @Inject constructor(
     private val dogBreedImageRepo: DogBreedImageRepoDomain
 ) : ViewModel() {
 
-    private var _dogBreed_list = MutableStateFlow<Resource<DogBreed>>(Resource.Empty())
-    val dogBreed_list: Flow<Resource<DogBreed>> = _dogBreed_list
+    private var _dogBreed_list = MutableStateFlow<Resource<List<DogBreed>>>(Resource.Empty())
+    val dogBreed_list: Flow<Resource<List<DogBreed>>> = _dogBreed_list
 
 
-    private var _dogBreedImage_list = MutableStateFlow<Resource<List<DogBreedImage>>>(Resource.Empty())
-    val dogBreedImage_list: Flow<Resource<List<DogBreedImage>>> = _dogBreedImage_list
+    private var _dogBreedImage_list = MutableStateFlow<Resource<DogBreedImage>>(Resource.Empty())
+    val dogBreedImage_list: Flow<Resource<DogBreedImage>> = _dogBreedImage_list
 
     fun getAllBreeds() = viewModelScope.launch {
         _dogBreed_list.emit(Resource.Loading())

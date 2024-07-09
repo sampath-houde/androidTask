@@ -2,7 +2,11 @@ package com.sampath.androidTask.di
 
 import android.content.Context
 import com.bumptech.glide.Glide
-import com.sampath.androidTask.utils.NetworkUtils
+import com.sampath.androidTask.data.repo.DogBreedImageRepo
+import com.sampath.androidTask.data.repo.DogBreedRepo
+import com.sampath.androidTask.domain.repository.DogBreedImageRepoDomain
+import com.sampath.androidTask.domain.repository.DogBreedsRepoDomain
+import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -20,8 +24,14 @@ object Module {
     @Provides
     fun providesGlide(applicationContext: Context) = Glide.with(applicationContext)
 
+}
 
-    @Provides
-    fun providesNetworkUtils(context: Context) = NetworkUtils(context)
+@Module
+@InstallIn(SingletonComponent::class)
+abstract class BindsModule {
+    @Binds
+    abstract fun bindDogBreedRepository(repo: DogBreedRepo): DogBreedsRepoDomain
 
+    @Binds
+    abstract fun bindCharacterDetailsRepository(repo: DogBreedImageRepo): DogBreedImageRepoDomain
 }

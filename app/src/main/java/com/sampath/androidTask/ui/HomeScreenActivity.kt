@@ -60,7 +60,7 @@ class HomeScreenActivity : AppCompatActivity() {
                         binding.progressBar.visibility = View.GONE
                         binding.dogsRv.visibility = View.VISIBLE
 
-                        listOfBreeds = response.data.message.keys.toMutableList()
+                        response.data?.forEach { item -> listOfBreeds.add(item.name) }
                         dogBreedAdapter.updateData(listOfBreeds)
                     }
                 }

@@ -36,7 +36,7 @@ class ImageViewActivity : AppCompatActivity() {
                         Timber.d("Fetching Dog Breed Image...")
                     }
                     is Resource.Success -> {
-                        val randomImageUrl = response.data.message.random()
+                        val randomImageUrl = response.data?.imageUrl?.random()
                         Glide.with(this@ImageViewActivity)
                             .load(randomImageUrl)
                             .into(binding.dogImageView)

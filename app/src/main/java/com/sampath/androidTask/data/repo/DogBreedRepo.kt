@@ -10,7 +10,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-class DogRepo @Inject constructor(
+class DogBreedRepo @Inject constructor(
     private val dogApi: DogApiService
 ) : DogBreedsRepoDomain  {
     override suspend fun getDogBreeds(): Resource<List<DogBreed>> {

@@ -13,7 +13,7 @@ import javax.inject.Inject
 class DogBreedImageRepo @Inject constructor(
     private val dogApi: DogApiService
 ) : DogBreedImageRepoDomain {
-    override suspend fun getImageByBreed(breed: String): Resource<List<DogBreedImage>> {
+    override suspend fun getImageByBreed(breed: String): Resource<DogBreedImage> {
         return withContext(Dispatchers.IO) {
             val resource = dogApi.getImageByBreed(breed)
             if (resource.isSuccessful) {

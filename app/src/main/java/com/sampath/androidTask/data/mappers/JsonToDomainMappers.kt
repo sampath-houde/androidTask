@@ -15,8 +15,6 @@ fun DogBreedResponse.toDomain(): List<DogBreed> {
     }
 }
 
-fun DogBreedImageResponse.toDomain(): List<DogBreedImage> {
-    return this.message.map {
-        DogBreedImage(imageUrl = it)
-    }
+fun DogBreedImageResponse.toDomain(): DogBreedImage {
+    return DogBreedImage(imageUrl = this.message)
 }
