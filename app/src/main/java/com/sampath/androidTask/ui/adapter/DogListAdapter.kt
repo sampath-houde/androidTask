@@ -1,5 +1,6 @@
 package com.sampath.androidTask.ui.adapter
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,11 +10,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.sampath.androidTask.R
 import com.sampath.androidTask.databinding.DogItemBinding
 import com.sampath.androidTask.domain.model.DogBreed
+import javax.inject.Inject
 
-class DogBreedAdapter(private val onTaskClicked: (String) -> Unit) :
+class DogBreedAdapter(context: Context, private val onTaskClicked: (String) -> Unit) :
     RecyclerView.Adapter<DogBreedAdapter.DogBreedViewHolder>() {
 
-        private var currentList = mutableListOf<DogBreed>()
+        private var dogSubBreedsAdapter: DogSubBreedsAdapter = DogSubBreedsAdapter(context)
+
+    private var currentList = mutableListOf<DogBreed>()
         private val expandedBreeds = mutableSetOf<String>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DogBreedViewHolder {
@@ -51,7 +55,8 @@ class DogBreedAdapter(private val onTaskClicked: (String) -> Unit) :
                 binding.arrowImg.visibility = View.VISIBLE
 
             binding.subBreedsRecyclerView.layoutManager = LinearLayoutManager(itemView.context)
-            binding.subBreedsRecyclerView.adapter = DogSubBreedsAdapter(breed.subBreed)
+            binding.subBreedsRecyclerView.adapter = dogSubBreedsAdapter
+            dogSubBreedsAdapter.updateData(breed.subBreed, breed.name)
 
             binding.arrowImg.setOnClickListener {
                 if (expandedBreeds.contains(breed.name)) {

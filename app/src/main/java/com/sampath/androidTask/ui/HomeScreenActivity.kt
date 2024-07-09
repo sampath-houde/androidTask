@@ -69,7 +69,7 @@ class HomeScreenActivity : AppCompatActivity() {
     }
 
     fun initRecyclerView() {
-        dogBreedAdapter = DogBreedAdapter{
+        dogBreedAdapter = DogBreedAdapter(this){
             val intent = Intent(this, ImageViewActivity::class.java)
                 .apply {
                     putExtra(INTENT_DOG_NAME, it)

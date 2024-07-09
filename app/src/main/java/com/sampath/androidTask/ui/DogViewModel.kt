@@ -26,9 +26,6 @@ class DogViewModel @Inject constructor(
     private var _dogBreedImage_list = MutableStateFlow<Resource<DogBreedImage>>(Resource.Empty())
     val dogBreedImage_list: Flow<Resource<DogBreedImage>> = _dogBreedImage_list
 
-    private var _dogSubBreedImage_list = MutableStateFlow<Resource<DogBreedImage>>(Resource.Empty())
-    val dogSubBreedImage_list: Flow<Resource<DogBreedImage>> = _dogSubBreedImage_list
-
 
     fun getDogBreeds() = viewModelScope.launch {
         _dogBreed_list.emit(Resource.Loading())
@@ -42,8 +39,8 @@ class DogViewModel @Inject constructor(
         _dogBreedImage_list.emit(dogBreedImageRepo.getImageByBreed(breed))
     }
     fun getImageBySubBreed(breed: String, subBreed: String) = viewModelScope.launch {
-        _dogSubBreedImage_list.emit(Resource.Loading())
+        _dogBreedImage_list.emit(Resource.Loading())
         Timber.d("Fetching image url of Sub Breed $subBreed")
-        _dogSubBreedImage_list.emit(dogBreedImageRepo.getImagedBySubBreed(breed, subBreed))
+        _dogBreedImage_list.emit(dogBreedImageRepo.getImagedBySubBreed(breed, subBreed))
     }
 }

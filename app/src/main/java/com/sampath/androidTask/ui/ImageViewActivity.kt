@@ -31,12 +31,19 @@ class ImageViewActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val dogName = intent.getStringExtra(INTENT_DOG_NAME)
+        val intentString = intent.getStringExtra(INTENT_DOG_NAME)
         initRecyclerView()
 
-        title = dogName
+        if(intentString!!.contains("//")) {
+            val breed = intentString.split("//")[0]
+            val subBreed = intentString.split("//")[1]
+            homeScreenViewModel.getImageBySubBreed(breed, subBreed)
+            title = subBreed
+        } else {
+            title = intentString
+            homeScreenViewModel.getImageByBreed(intentString)
+        }
 
-        homeScreenViewModel.getImageByBreed(dogName!!)
         lifecycleScope.launch {
             homeScreenViewModel.dogBreedImage_list.collect { response ->
                 when (response) {

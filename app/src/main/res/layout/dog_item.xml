@@ -4,13 +4,13 @@
     android:layout_height="wrap_content"
     android:layout_marginStart="18dp"
     android:layout_marginEnd="18dp"
+    android:elevation="4dp"
     xmlns:tools="http://schemas.android.com/tools">
 
     <TextView
         android:id="@+id/breed_name"
         android:textSize="18sp"
         tools:text="Hound"
-
         android:textColor="@color/black"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
@@ -19,7 +19,7 @@
         android:id="@+id/arrow_img"
         android:layout_alignParentEnd="true"
         android:contentDescription="@string/arrow_icon"
-        android:src="@drawable/baseline_arrow_forward_ios_24"
+        android:src="@drawable/baseline_arrow_drop_down_circle_24"
         android:layout_width="28dp"
         android:padding="4dp"
         android:background="?attr/selectableItemBackground"
@@ -30,6 +30,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:visibility="gone"
+        android:layout_below="@id/breed_name"
         android:layout_marginTop="8dp" />
 
     <RelativeLayout
@@ -38,7 +39,7 @@
         android:layout_marginTop="12dp"
         android:layout_marginBottom="8dp"
         android:background="#5B5B5B"
-        android:layout_below="@id/breed_name"
+        android:layout_below="@id/subBreedsRecyclerView"
         android:layout_height="1dp"/>
 
 </RelativeLayout>
