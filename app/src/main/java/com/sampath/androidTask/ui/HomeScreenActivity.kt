@@ -38,12 +38,12 @@ class HomeScreenActivity : AppCompatActivity() {
         initRecyclerView()
         callApi()
 
-
         binding.swipeRefresh.setOnRefreshListener {
             callApi()
         }
 
-        lifecycleScope.launch {
+
+        lifecycleScope.launchWhenStarted {
             homeScreenViewModel.dogBreed_list.collect { response ->
 
                 when(response) {
@@ -63,13 +63,13 @@ class HomeScreenActivity : AppCompatActivity() {
                         dogBreedAdapter.updateData(listOfBreeds)
                     }
                 }
+        }
 
-            }
+
         }
     }
 
     fun initRecyclerView() {
-
         dogBreedAdapter = DogBreedAdapter{
             val intent = Intent(this, ImageViewActivity::class.java)
                 .apply {
@@ -89,7 +89,7 @@ class HomeScreenActivity : AppCompatActivity() {
         binding.dogsRv.visibility = View.GONE
 
         binding.progressBar.visibility = View.VISIBLE
-        homeScreenViewModel.getAllBreeds()
+        homeScreenViewModel.getDogBreeds()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -128,7 +128,6 @@ class HomeScreenActivity : AppCompatActivity() {
             intent.getStringExtra(SearchManager.QUERY)?.also { query ->
                 doSearch(query)
                 suggestions.saveRecentQuery(query, null)
-
             }
         }
 

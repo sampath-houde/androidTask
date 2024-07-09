@@ -14,4 +14,12 @@ interface DogApiService {
     @GET("breed/{breed}/images")
     suspend fun getImageByBreed(@Path("breed") breed: String) : Response<DogBreedImageResponse>
 
+    @GET("breed/{breed}/{sub_breed}/images/")
+    suspend fun getImagesBySubBreed(
+        @Path("breed") breedName: String,
+        @Path("sub_breed") subBreedName: String
+    ): Response<DogBreedImageResponse>
+
+
+
 }

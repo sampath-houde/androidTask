@@ -33,14 +33,11 @@ class DogBreedAdapter(private val onTaskClicked: (String) -> Unit) :
     inner class DogBreedViewHolder(private val binding: DogItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        init {
-            binding.root.setOnClickListener {
-                onTaskClicked(currentList[0])
-            }
-        }
-
         fun bind(breed: String) {
             binding.breedName.text = breed
+            binding.root.setOnClickListener {
+                onTaskClicked(breed)
+            }
         }
     }
 }
