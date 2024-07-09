@@ -26,11 +26,9 @@ class DogImageAdapter @Inject constructor(val context: Context) :
     }
 
     fun updateData(updatedList: List<String>) {
-        val diffCallback = DogBreedDiffUtil(currentList, updatedList)
-        val diffResult = DiffUtil.calculateDiff(diffCallback)
         currentList.clear()
         currentList.addAll(updatedList)
-        diffResult.dispatchUpdatesTo(this)
+        notifyDataSetChanged()
     }
 
     inner class DogBreedImageViewHolder(private val binding: DogImageItemBinding) :

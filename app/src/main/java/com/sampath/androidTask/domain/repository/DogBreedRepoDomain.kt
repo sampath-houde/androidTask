@@ -4,6 +4,6 @@ import com.sampath.androidTask.domain.model.DogBreed
 import com.sampath.androidTask.utils.Resource
 import kotlinx.coroutines.flow.Flow
 
-interface DogBreedsRepoDomain {
+interface DogBreedRepoDomain {
     suspend fun getDogBreeds(): Resource<List<DogBreed>>
 }

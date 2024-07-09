@@ -12,6 +12,7 @@ import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.lifecycleScope
 import com.sampath.androidTask.R
 import com.sampath.androidTask.databinding.ActivityHomescreenBinding
+import com.sampath.androidTask.domain.model.DogBreed
 import com.sampath.androidTask.ui.adapter.DogBreedAdapter
 import com.sampath.androidTask.utils.Constants.INTENT_DOG_NAME
 import com.sampath.androidTask.utils.Resource
@@ -19,7 +20,6 @@ import com.sampath.androidTask.utils.suggestions
 import com.sampath.androidTask.utils.toastShort
 import com.sampath.androidTask.utils.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
 import timber.log.Timber
 
 
@@ -29,7 +29,7 @@ class HomeScreenActivity : AppCompatActivity() {
     private val binding by viewBinding(ActivityHomescreenBinding::inflate)
     private lateinit var dogBreedAdapter: DogBreedAdapter
     private val homeScreenViewModel: DogViewModel by viewModels()
-    private var listOfBreeds = mutableListOf<String>()
+    private var listOfBreeds = listOf<DogBreed>()
     private lateinit var searchView: SearchView
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -58,8 +58,7 @@ class HomeScreenActivity : AppCompatActivity() {
                     is Resource.Success -> {
                         binding.progressBar.visibility = View.GONE
                         binding.dogsRv.visibility = View.VISIBLE
-
-                        response.data?.forEach { item -> listOfBreeds.add(item.name) }
+                        listOfBreeds = response.data!!
                         dogBreedAdapter.updateData(listOfBreeds)
                     }
                 }
@@ -84,6 +83,22 @@ class HomeScreenActivity : AppCompatActivity() {
         }
     }
 
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        setIntent(intent)
+        handleIntent(intent)
+    }
+
+    private fun handleIntent(intent: Intent) {
+        if (Intent.ACTION_SEARCH == intent.action) {
+            intent.getStringExtra(SearchManager.QUERY)?.also { query ->
+                updateDataToAdapter(query)
+                suggestions.saveRecentQuery(query, null)
+            }
+        }
+
+    }
+
     fun callApi() {
         binding.swipeRefresh.isRefreshing = false
         binding.dogsRv.visibility = View.GONE
@@ -100,44 +115,21 @@ class HomeScreenActivity : AppCompatActivity() {
         val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
         searchView.setSearchableInfo(searchManager.getSearchableInfo(componentName))
 
-        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String?): Boolean {
-
+        searchView.setOnQueryTextFocusChangeListener { v, newViewFocus ->
+            if (!newViewFocus) {
                 menuItem.collapseActionView()
-                updateDataToAdapter(query)
-                return false
-            }
-            override fun onQueryTextChange(newText: String?): Boolean {
-                updateDataToAdapter(query = newText)
-                return false
-            }
-        })
-        return super.onCreateOptionsMenu(menu)
-    }
-
-    private fun doSearch(query: String) {
-        updateDataToAdapter(query)
-    }
-    override fun onNewIntent(intent: Intent) {
-        super.onNewIntent(intent)
-        setIntent(intent)
-        handleIntent(intent)
-    }
-    private fun handleIntent(intent: Intent) {
-        if (Intent.ACTION_SEARCH == intent.action) {
-            intent.getStringExtra(SearchManager.QUERY)?.also { query ->
-                doSearch(query)
-                suggestions.saveRecentQuery(query, null)
+                updateDataToAdapter(null)
             }
         }
 
+        return true
     }
 
     private fun updateDataToAdapter(query: String?) {
         val filteredBreeds = if (query.isNullOrEmpty()) {
             listOfBreeds
         } else {
-            listOfBreeds.filter { it.contains(query, true) }
+            listOfBreeds.filter { it.name.contains(query, true) }
         }
         dogBreedAdapter.updateData(filteredBreeds)
     }

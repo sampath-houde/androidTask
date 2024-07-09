@@ -32,20 +32,17 @@ class ImageViewActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         val dogName = intent.getStringExtra(INTENT_DOG_NAME)
-
         initRecyclerView()
+
+        title = dogName
 
         homeScreenViewModel.getImageByBreed(dogName!!)
         lifecycleScope.launch {
             homeScreenViewModel.dogBreedImage_list.collect { response ->
                 when (response) {
                     is Resource.Empty -> Unit
-                    is Resource.Error -> {
-                        toastShort(response.message)
-                    }
-                    is Resource.Loading -> {
-                        Timber.d("Fetching Dog Breed Image...")
-                    }
+                    is Resource.Error -> { toastShort(response.message) }
+                    is Resource.Loading -> { Timber.d("Fetching Dog Breed Image...") }
                     is Resource.Success -> {
                         val imageListUrl = response.data?.imageUrl
                         if(imageListUrl.isNullOrEmpty())

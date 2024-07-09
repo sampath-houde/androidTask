@@ -1,20 +1,18 @@
 package com.sampath.androidTask.ui.adapter
 
-import android.annotation.SuppressLint
 import androidx.recyclerview.widget.DiffUtil
-import timber.log.Timber
+import com.sampath.androidTask.domain.model.DogBreed
 
-class DogBreedDiffUtil(oldList: List<String>, newList: List<String>) : DiffUtil.Callback() {
-    private val mOldNoteList: List<String> = oldList
-    private val mNewNoteList: List<String> = newList
+class DogBreedDiffUtil(oldList: List<DogBreed>, newList: List<DogBreed>) : DiffUtil.Callback() {
+    private val mOldNoteList: List<DogBreed> = oldList
+    private val mNewNoteList: List<DogBreed> = newList
 
     override fun getOldListSize(): Int = mOldNoteList.size
 
     override fun getNewListSize(): Int = mNewNoteList.size
 
     override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-        return mOldNoteList.get(oldItemPosition) == mNewNoteList.get(
-            newItemPosition)
+        return mOldNoteList[oldItemPosition] == mNewNoteList[newItemPosition]
     }
 
     override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {

@@ -2,28 +2,21 @@ package com.sampath.androidTask.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.sampath.androidTask.data.remote.model.DogBreedResponse
-import com.sampath.androidTask.data.remote.model.DogBreedImageResponse
 import com.sampath.androidTask.domain.model.DogBreed
 import com.sampath.androidTask.domain.model.DogBreedImage
-import com.sampath.androidTask.domain.model.DogSubBreed
 import com.sampath.androidTask.domain.repository.DogBreedImageRepoDomain
-import com.sampath.androidTask.domain.repository.DogBreedsRepoDomain
+import com.sampath.androidTask.domain.repository.DogBreedRepoDomain
 import com.sampath.androidTask.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
 class DogViewModel @Inject constructor(
-    private val dogBreedRepo: DogBreedsRepoDomain,
+    private val dogBreedRepo: DogBreedRepoDomain,
     private val dogBreedImageRepo: DogBreedImageRepoDomain
 ) : ViewModel() {
 

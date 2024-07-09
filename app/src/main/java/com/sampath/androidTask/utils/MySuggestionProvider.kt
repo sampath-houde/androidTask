@@ -8,7 +8,7 @@ class MySuggestionProvider : SearchRecentSuggestionsProvider() {
     }
 
     companion object {
-        const val AUTHORITY = "com.materialsearchview.MySuggestionProvider"
+        const val AUTHORITY = "com.sampath.androidTask.utils.MySuggestionProvider"
         const val MODE: Int = DATABASE_MODE_QUERIES
     }
 }

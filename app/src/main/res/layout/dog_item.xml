@@ -2,7 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="18dp"
+    android:layout_marginStart="18dp"
+    android:layout_marginEnd="18dp"
     xmlns:tools="http://schemas.android.com/tools">
 
     <TextView
@@ -23,5 +24,21 @@
         android:padding="4dp"
         android:background="?attr/selectableItemBackground"
         android:layout_height="28dp"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/subBreedsRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:layout_marginTop="8dp" />
+
+    <RelativeLayout
+        android:id="@+id/spacer"
+        android:layout_width="match_parent"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="8dp"
+        android:background="#5B5B5B"
+        android:layout_below="@id/breed_name"
+        android:layout_height="1dp"/>
 
 </RelativeLayout>
