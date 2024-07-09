@@ -15,6 +15,7 @@ import com.sampath.androidTask.databinding.ActivityHomescreenBinding
 import com.sampath.androidTask.ui.adapter.DogBreedAdapter
 import com.sampath.androidTask.utils.Constants.INTENT_DOG_NAME
 import com.sampath.androidTask.utils.Resource
+import com.sampath.androidTask.utils.suggestions
 import com.sampath.androidTask.utils.toastShort
 import com.sampath.androidTask.utils.viewBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -112,6 +113,25 @@ class HomeScreenActivity : AppCompatActivity() {
             }
         })
         return super.onCreateOptionsMenu(menu)
+    }
+
+    private fun doSearch(query: String) {
+        updateDataToAdapter(query)
+    }
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        setIntent(intent)
+        handleIntent(intent)
+    }
+    private fun handleIntent(intent: Intent) {
+        if (Intent.ACTION_SEARCH == intent.action) {
+            intent.getStringExtra(SearchManager.QUERY)?.also { query ->
+                doSearch(query)
+                suggestions.saveRecentQuery(query, null)
+
+            }
+        }
+
     }
 
     private fun updateDataToAdapter(query: String?) {

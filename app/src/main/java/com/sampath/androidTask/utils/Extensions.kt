@@ -18,3 +18,10 @@ fun Context.getCircularProgress(): CircularProgressDrawable {
     }
     return circularProgressDrawable
 }
+
+val Context.suggestions: SearchRecentSuggestions
+    get() = SearchRecentSuggestions(
+        this,
+        MySuggestionProvider.AUTHORITY,
+        MySuggestionProvider.MODE
+    )
