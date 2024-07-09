@@ -12,10 +12,10 @@ import com.sampath.androidTask.databinding.DogItemBinding
 import com.sampath.androidTask.domain.model.DogBreed
 import javax.inject.Inject
 
-class DogBreedAdapter(context: Context, private val onTaskClicked: (String) -> Unit) :
+class DogBreedAdapter(val context: Context, private val onTaskClicked: (String) -> Unit) :
     RecyclerView.Adapter<DogBreedAdapter.DogBreedViewHolder>() {
 
-        private var dogSubBreedsAdapter: DogSubBreedsAdapter = DogSubBreedsAdapter(context)
+        private lateinit var dogSubBreedsAdapter: DogSubBreedsAdapter
 
     private var currentList = mutableListOf<DogBreed>()
         private val expandedBreeds = mutableSetOf<String>()
@@ -55,6 +55,7 @@ class DogBreedAdapter(context: Context, private val onTaskClicked: (String) -> U
                 binding.arrowImg.visibility = View.VISIBLE
 
             binding.subBreedsRecyclerView.layoutManager = LinearLayoutManager(itemView.context)
+            dogSubBreedsAdapter = DogSubBreedsAdapter(context, breed.subBreed.toMutableList(), breed.name)
             binding.subBreedsRecyclerView.adapter = dogSubBreedsAdapter
             dogSubBreedsAdapter.updateData(breed.subBreed, breed.name)
 
